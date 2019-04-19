@@ -12,9 +12,9 @@ public class FirstTest {
     public void doRegisterTest() {
         JSONObject jsonObject = new JSONObject();
         jsonObject
-                .append("email", "1234milli@mail.ru")
-                .append("name", "1223Машенька")
-                .append("password", "1");
+                .put("email", "1234milli@mail.ru")
+                .put("name", "1223Машенька")
+                .put("password", "1");
 
         given()
                 .when()
