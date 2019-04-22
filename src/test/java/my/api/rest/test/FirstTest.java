@@ -1,4 +1,4 @@
-package my.api.rest;
+package my.api.rest.test;
 
 import com.jayway.restassured.http.ContentType;
 import org.json.JSONObject;
@@ -87,4 +87,6 @@ public class FirstTest {
                     .body(emailKey, equalTo(emailValue));
 
     }
+
+
 }
