@@ -61,6 +61,47 @@ public class DoRegisterTest {
                         new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail." + rnd.nextInt(1000000000) + "@test.name").setPassword("1"),      // 	.name is valid Top Level Domain name
                         new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail." + rnd.nextInt(1000000000) + "@test.co.ts").setPassword("1"),     //  Dot in Top Level Domain name also considered valid (use co.ts as example here)
                         new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("valid-email-" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1")
+
+                        // different types of valid user names & passwords:
+                };
+    }
+
+
+    @Test(dataProvider = "getInvalidUserToRegister")
+    public void doRegister_InvalidDataTest(User user) {
+        JSONObject jsonObject = new JSONObject();
+        String nameKey = "name";
+        String emailKey = "email";
+        jsonObject
+                .put(emailKey, user.email)
+                .put(nameKey, user.name)
+                .put("password", user.password);
+        System.out.println(jsonObject.toString());
+
+        given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(jsonObject.toString())
+                .post(" http://users.bugred.ru/tasks/rest/doregister")
+
+                .then()
+                .log()
+                .body()
+                .assertThat()
+                .body("type", equalTo("error")); // TODO: extend checks
+                //.body("message", likeSomething);
+    }
+
+    @DataProvider
+    public Object[] getInvalidUserToRegister() {
+        Random rnd = new Random();
+        return new Object[]
+                {
+                        // different types of valid emails:
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("plainaddress").setPassword("1"),      // Missing @ sign and domain
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("#@%^%#$@#$@#.com").setPassword("1"),   // Garbage
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("@domain.com").setPassword("1")        // Missing username
+                        // TODO: add more cases
                 };
     }
 }
