@@ -22,7 +22,7 @@ public class DoRegisterTest {
                 .put(emailKey, user.email)
                 .put(nameKey, user.name)
                 .put("password", user.password);
-        System.out.println(jsonObject.toString());
+        System.out.println("Request: \n" + jsonObject.toString() + "\nResponse:");
 
         given()
                 .when()
@@ -49,18 +49,18 @@ public class DoRegisterTest {
                 {
                         // different types of valid emails:
                         new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@subdomain.subdomain.test.ts").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@123.255.0.1").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@[123.255.0.1]").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@subdomain-subdomain-test.ts").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@test.name").setPassword("1"),      // 	.name is valid Top Level Domain name
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@test.co.ts").setPassword("1"),     //  Dot in Top Level Domain name also considered valid (use co.ts as example here)
                         new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("valid.email." + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
                         new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("valid_email_" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail." + rnd.nextInt(1000000000) + "@subdomain.subdomain.test.ts").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail+" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail+" + rnd.nextInt(1000000000) + "@123.255.0.1").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail+" + rnd.nextInt(1000000000) + "@[123.255.0.1]").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("\"valid\"email+" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail(rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail." + rnd.nextInt(1000000000) + "@subdomain-subdomain-test.ts").setPassword("1"),
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail." + rnd.nextInt(1000000000) + "@test.name").setPassword("1"),      // 	.name is valid Top Level Domain name
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail." + rnd.nextInt(1000000000) + "@test.co.ts").setPassword("1"),     //  Dot in Top Level Domain name also considered valid (use co.ts as example here)
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("valid-email-" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1")
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("valid-email-" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("valid+email+" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("valid\"email\"" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1"),
+                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail(rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + "@test.ts").setPassword("1")
 
                         // different types of valid user names & passwords:
                 };
