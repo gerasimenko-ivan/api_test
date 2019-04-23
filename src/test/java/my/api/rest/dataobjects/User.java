@@ -19,4 +19,9 @@ public class User {
         this.password = password;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "{name: " + name + "; email: " + email + "; password: " + password + "}";
+    }
 }
