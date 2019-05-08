@@ -45,6 +45,7 @@ public class DoRegisterTest {
     public Object[] getValidUserToRegister() {
         Random rnd = new Random();
 
+        // https://blogs.msdn.microsoft.com/testing123/2009/02/06/email-address-test-cases/
         return new Object[]
                 {
                         // different types of valid emails:
