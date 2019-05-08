@@ -5,6 +5,10 @@ public class User {
     public String email;
     public String password;
 
+    public String name1;
+
+    public String hamster;
+
     public User setName(String name) {
         this.name = name;
         return this;
@@ -20,8 +24,36 @@ public class User {
         return this;
     }
 
+
+    public User setName1(String name1) {
+        this.name1 = name1;
+        return this;
+    }
+
+
+    public User setHamster(String hamster) {
+        this.hamster = hamster;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return "{name: " + name + "; email: " + email + "; password: " + password + "}";
+        if (name == null && email == null && password == null) {
+            String objInfo = "{";
+            if (name1 != null) {
+                objInfo += "name1: '" + name1 + "', ";
+            }
+
+            if (hamster != null) {
+                objInfo += "hamster: '" + hamster + "', ";
+            }
+
+            if (objInfo.length() > 2) {
+                objInfo = objInfo.substring(0, objInfo.length()-2);
+            }
+            objInfo += "}";
+            return objInfo;
+        }
+        return "{name: '" + name + "', email: '" + email + "', password: '" + password + "'}";
     }
 }
