@@ -66,7 +66,6 @@ public class UpdateUserOneFieldTest {
         String userWithOneNewFieldValue_asJsonString = null;
         try {
             userWithOneNewFieldValue_asJsonString = new ObjectMapper().writeValueAsString(userWithOneNewFieldValue);
-            System.out.println(userWithOneNewFieldValue_asJsonString);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -89,7 +88,7 @@ public class UpdateUserOneFieldTest {
                 .put(emailKey, testUser.email)
                 .put("field", fieldName)
                 .put("value", fieldValue);
-        System.out.println("\nRequest: \n" + userUpdateAsJson.toString() + "\nResponse:\n");
+        System.out.println("\nRequest: \n" + userUpdateAsJson.toString() + "\nResponse:");
 
         given()
                 .when()
@@ -100,6 +99,7 @@ public class UpdateUserOneFieldTest {
                 .log()
                 .body()
                 .assertThat()
+                .statusCode(equalTo(200))
                 .body("type", equalTo("error"))
                 .body("message", equalTo("Поле " + fieldName + " успешно изменено на " + fieldValue + " у пользователя с email " + testUser.email));
 
@@ -115,8 +115,20 @@ public class UpdateUserOneFieldTest {
                         new User().setSurname1("new Surname1 " + rnd.nextInt(100000)),
                         new User().setName1("new name1 " + rnd.nextInt(100000)),
                         new User().setFathername1("new Fathername1 " + rnd.nextInt(100000)),
+
                         new User().setHobby("new Hobby " + rnd.nextInt(100000)),
-                        new User().setHamster("my hamster name " + rnd.nextInt(100000))
+                        new User().setCat("new Cat " + rnd.nextInt(100000)),
+                        new User().setDog("new Dog " + rnd.nextInt(100000)),
+                        new User().setParrot("new Parrot " + rnd.nextInt(100000)),
+                        new User().setCavy("new Cavy " + rnd.nextInt(100000)),
+                        new User().setHamster("my Hamster name " + rnd.nextInt(100000)),
+                        new User().setSquirrel("my Squirrel name " + rnd.nextInt(100000)),
+                        new User().setPhone("+" + rnd.nextInt(10) + "(" + rnd.nextInt(1000) + ")" + rnd.nextInt(1000) + "-" + rnd.nextInt(100000) + " (add./доб. " + rnd.nextInt(100000) + ")"),
+                        new User().setAdres("my Adres bla-bla-bla-bla-bla bla-bla-bla-bla-bla " + rnd.nextInt(100000)),
+                        new User().setGender(rnd.nextInt(2) == 0 ? "m" : "f"),
+                        new User().setBirthday(String.format("%02d", (1 + rnd.nextInt(31))) + "." + String.format("%02d", 1 + rnd.nextInt(12)) + "." + (1900 + rnd.nextInt(200))),
+                        new User().setDate_start(String.format("%02d", (1 + rnd.nextInt(31))) + "." + String.format("%02d", 1 + rnd.nextInt(12)) + "." + (1900 + rnd.nextInt(200))),
+                        new User().setInn(String.format("%06d", rnd.nextInt(1000000)) + String.format("%06d", rnd.nextInt(1000000)))
                 };
     }
 
