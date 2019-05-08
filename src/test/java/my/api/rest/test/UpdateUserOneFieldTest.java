@@ -1,5 +1,7 @@
 package my.api.rest.test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import my.api.rest.dataobjects.User;
@@ -8,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -25,8 +28,6 @@ public class UpdateUserOneFieldTest {
 
     @BeforeClass
     public void testUserForUpdateCreationOrCheckExists() {
-
-
         JSONObject testUserAsJson = new JSONObject();
         String nameKey = "name";
         String emailKey = "email";
@@ -60,7 +61,48 @@ public class UpdateUserOneFieldTest {
 
 
     @Test(dataProvider = "getValidUserInfoForUpdate")
-    public void updateUserOneField_validInputDataTest(User user) {
+    public void updateUserOneField_validInputDataTest(User userWithOneNewFieldValue) {
+        System.out.println("\n----------------------------\nTest");
+        String userWithOneNewFieldValue_asJsonString = null;
+        try {
+            userWithOneNewFieldValue_asJsonString = new ObjectMapper().writeValueAsString(userWithOneNewFieldValue);
+            System.out.println(userWithOneNewFieldValue_asJsonString);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        JSONObject userWithOneNewFieldValue_asJson = new JSONObject(userWithOneNewFieldValue_asJsonString);
+        Iterator<String> keys = userWithOneNewFieldValue_asJson.keys();
+        String fieldName = "";
+        String fieldValue = "";
+        while (keys.hasNext()) {
+            String key = keys.next();
+            Object value = userWithOneNewFieldValue_asJson.get(key);
+            if (!value.toString().equals("null")) {
+                fieldName = key;
+                fieldValue = value.toString();
+            }
+        }
+
+        JSONObject userUpdateAsJson = new JSONObject();
+        String emailKey = "email";
+        userUpdateAsJson
+                .put(emailKey, testUser.email)
+                .put("field", fieldName)
+                .put("value", fieldValue);
+        System.out.println("\nRequest: \n" + userUpdateAsJson.toString() + "\nResponse:\n");
+
+        given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(userUpdateAsJson.toString())
+                .post(" http://users.bugred.ru/tasks/rest/useronefield")
+                .then()
+                .log()
+                .body()
+                .assertThat()
+                .body("type", equalTo("error"))
+                .body("message", equalTo("Поле " + fieldName + " успешно изменено на " + fieldValue + " у пользователя с email " + testUser.email));
+
 
     }
 
@@ -70,8 +112,11 @@ public class UpdateUserOneFieldTest {
 
         return new Object[]
                 {
-                        // different types of valid emails:
-                        new User().setName("ABC" + rnd.nextInt(1000000000)).setEmail("validemail" + rnd.nextInt(1000000000) + "@test.ts").setPassword("1")
+                        new User().setSurname1("new Surname1 " + rnd.nextInt(100000)),
+                        new User().setName1("new name1 " + rnd.nextInt(100000)),
+                        new User().setFathername1("new Fathername1 " + rnd.nextInt(100000)),
+                        new User().setHobby("new Hobby " + rnd.nextInt(100000)),
+                        new User().setHamster("my hamster name " + rnd.nextInt(100000))
                 };
     }
 
