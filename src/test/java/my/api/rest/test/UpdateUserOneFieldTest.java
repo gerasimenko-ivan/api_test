@@ -38,8 +38,8 @@ public class UpdateUserOneFieldTest {
         System.out.println("Request: \n" + testUserAsJson.toString() + "\n");
 
         Response response = given()
-                .when()
-                .contentType(ContentType.JSON)
+                .when()                         //.accept(ContentType.XML) - response content type
+                .contentType(ContentType.JSON)  // request content type
                 .body(testUserAsJson.toString())
                 .post(" http://users.bugred.ru/tasks/rest/doregister");
 
@@ -102,8 +102,6 @@ public class UpdateUserOneFieldTest {
                 .statusCode(equalTo(200))
                 .body("type", equalTo("error"))
                 .body("message", equalTo("Поле " + fieldName + " успешно изменено на " + fieldValue + " у пользователя с email " + testUser.email));
-
-
     }
 
     @DataProvider
@@ -117,7 +115,7 @@ public class UpdateUserOneFieldTest {
                         new User().setFathername1("new Fathername1 " + rnd.nextInt(100000)),
 
                         new User().setHobby("new Hobby " + rnd.nextInt(100000)),
-                        new User().setCat("new Cat " + rnd.nextInt(100000)),
+                        new User().setCat("новый кот " + rnd.nextInt(100000)),
                         new User().setDog("new Dog " + rnd.nextInt(100000)),
                         new User().setParrot("new Parrot " + rnd.nextInt(100000)),
                         new User().setCavy("new Cavy " + rnd.nextInt(100000)),
