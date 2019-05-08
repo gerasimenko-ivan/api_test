@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SuggestResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="suggestions">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="value" type="xs:string"/>
+                            <xs:element name="unrestricted_value" type="xs:string"/>
+                            <xs:element name="data">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="wstxns\d+:surname" type="xs:string">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns\d+" type="xs:string" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="name" type="xs:string">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns\d+" type="xs:string" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="patronymic" type="xs:string">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns1\d+" type="xs:string" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="gender" type="xs:string">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns1\d+" type="xs:string" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <!-- XML Schema Generated from XML Document on Wed Apr 24 2019 12:34:34 GMT+0300 (Москва, стандартное время) -->
+    <!-- with XmlGrid.net Free Online Service http://xmlgrid.net -->
+    <xs:element name="SuggestResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="suggestions" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="value" type="xs:string"></xs:element>
+                            <xs:element name="unrestricted_value" type="xs:string"></xs:element>
+                            <xs:element name="data">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="surname" type="xs:string">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns1" type="xs:string"></xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="name">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns2" type="xs:string"></xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="patronymic">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns3" type="xs:string"></xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="gender" type="xs:string">
+                                            <xs:complexType>
+                                                <xs:attribute name="wstxns4" type="xs:string"></xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="source"></xs:element>
+                                        <xs:element name="qc" type="xs:int"></xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

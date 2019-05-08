@@ -1,0 +1,110 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "suggestions"
+  ],
+  "properties": {
+    "suggestions": {
+      "$id": "#/properties/suggestions",
+      "type": "array",
+      "title": "The Suggestions Schema",
+      "items": {
+        "$id": "#/properties/suggestions/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "value",
+          "unrestricted_value",
+          "data"
+        ],
+        "properties": {
+          "value": {
+            "$id": "#/properties/suggestions/items/properties/value",
+            "type": "string",
+            "title": "The Value Schema",
+            "default": "",
+            "examples": [
+              "Миронова"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "unrestricted_value": {
+            "$id": "#/properties/suggestions/items/properties/unrestricted_value",
+            "type": "string",
+            "title": "The Unrestricted_value Schema",
+            "default": "",
+            "examples": [
+              "Миронова"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "data": {
+            "$id": "#/properties/suggestions/items/properties/data",
+            "type": "object",
+            "title": "The Data Schema",
+            "required": [
+              "surname",
+              "name",
+              "patronymic",
+              "gender",
+              "qc"
+            ],
+            "properties": {
+              "surname": {
+                "$id": "#/properties/suggestions/items/properties/data/properties/surname",
+                "type": "string",
+                "title": "The Surname Schema",
+                "default": "",
+                "examples": [
+                  "Миронова"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "name": {
+                "$id": "#/properties/suggestions/items/properties/data/properties/name",
+                "type": "null",
+                "title": "The Name Schema",
+                "default": null,
+                "examples": [
+                  null
+                ]
+              },
+              "patronymic": {
+                "$id": "#/properties/suggestions/items/properties/data/properties/patronymic",
+                "type": "null",
+                "title": "The Patronymic Schema",
+                "default": null,
+                "examples": [
+                  null
+                ]
+              },
+              "gender": {
+                "$id": "#/properties/suggestions/items/properties/data/properties/gender",
+                "type": "string",
+                "title": "The Gender Schema",
+                "default": "",
+                "examples": [
+                  "FEMALE"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "qc": {
+                "$id": "#/properties/suggestions/items/properties/data/properties/qc",
+                "type": "null",
+                "title": "The Qc Schema",
+                "default": null,
+                "examples": [
+                  null
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
