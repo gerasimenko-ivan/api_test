@@ -41,7 +41,7 @@ public class UpdateUserOneFieldTest {
                 .when()                         //.accept(ContentType.XML) - response content type
                 .contentType(ContentType.JSON)  // request content type
                 .body(testUserAsJson.toString())
-                .post(" http://users.bugred.ru/tasks/rest/doregister");
+                .post("http://users.bugred.ru/tasks/rest/doregister");
 
         assertThat("Check response code", response.statusCode(), equalTo(200));
 
@@ -94,7 +94,7 @@ public class UpdateUserOneFieldTest {
                 .when()
                 .contentType(ContentType.JSON)
                 .body(userUpdateAsJson.toString())
-                .post(" http://users.bugred.ru/tasks/rest/useronefield")
+                .post("http://users.bugred.ru/tasks/rest/useronefield")
                 .then()
                 .log()
                 .body()
