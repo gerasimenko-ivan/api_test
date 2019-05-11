@@ -86,7 +86,6 @@ public class MagicSearch {
         JSONObject userDoesNotExist =
                 new JSONObject()
                         .put("query", "abracadabra" + rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + rnd.nextInt(1000000000) + rnd.nextInt(1000000000));
-        System.out.println("\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
 
         magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 230);
     }
@@ -116,7 +115,6 @@ public class MagicSearch {
                         .put("taskStatus", JSONObject.NULL)
                         .put("include", JSONObject.NULL)
                         .put("maxCount", JSONObject.NULL);
-        System.out.println("\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
 
         magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 455);
     }
@@ -126,7 +124,6 @@ public class MagicSearch {
         JSONObject userDoesNotExist =
                 new JSONObject()
                         .put("query", new String(new char[1001]).replace("\0", "Q"));
-        System.out.println("\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
 
         magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 456);
     }
@@ -136,18 +133,16 @@ public class MagicSearch {
         JSONObject userDoesNotExist =
                 new JSONObject()
                         .put("query", new String(new char[1000]).replace("\0", "Q"));
-        System.out.println("\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
 
         magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 230);
     }
 
     @Test(dataProvider = "invalidPartyTypes")   // TODO: check valid partyTypes
-    public void checkStatusCode457_incorrectPartyType(String invalidPartyType) {
+    public void checkStatusCode457_invalidPartyType(String invalidPartyType) {
         JSONObject userDoesNotExist =
                 new JSONObject()
                         .put("query", userNoCompanies.name)
                         .put("partyType", invalidPartyType);  // ALL // USER // COMPANY // null
-        System.out.println("\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
 
         magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 457);
     }
@@ -172,9 +167,55 @@ public class MagicSearch {
         };
     }
 
+    @Test(dataProvider = "invalidTaskStatuses")
+    public void checkStatusCode458_invalidTaskStatus(String invalidTaskStatus) { // TODO: check also valid: ALL, ACTUAL, COMPLETE, FAIL
+        JSONObject userDoesNotExist =
+                new JSONObject()
+                        .put("query", userNoCompanies.name)
+                        .put("taskStatus", invalidTaskStatus);
 
+        magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 458);
+    }
+    @DataProvider
+    private Object[] invalidTaskStatuses(){
+        return new String[] {
+                "all",
+                "ALOL",
+                "AL",
+                "AALL",
+                "ALLL",
+                "actual",
+                "aCTUAL",
+                "AACTUAL",
+                "ACTUALY",
+                " ACTUAL",
+                "ACTUAL ",
+                "complete",
+                "COMPLETE ",
+                " COMPLETE",
+                "cOMPLETE",
+                "COMPLETED",
+                "fail",
+                "FAILED",
+                "FAIL ",
+                " FAIL",
+                "null",
+
+                "EVERY",
+                "REAL",
+                "GOOD",
+                "PASS",
+                "PASSED",
+                "BAD"
+        };
+    }
+
+
+    ////////////////////////////// SUPPORT FUNCTION
 
     private void magicSearchPostRequestWithStatusCodeCheck(JSONObject userDoesNotExist, int expectedStatusCode) {
+        System.out.println("\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
+
         given()
                 .when()
                 .contentType(ContentType.JSON)
