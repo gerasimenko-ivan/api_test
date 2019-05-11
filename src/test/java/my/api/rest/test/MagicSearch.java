@@ -139,12 +139,12 @@ public class MagicSearch {
 
     @Test(dataProvider = "invalidPartyTypes")   // TODO: check valid partyTypes
     public void checkStatusCode457_invalidPartyType(String invalidPartyType) {
-        JSONObject userDoesNotExist =
+        JSONObject userWithInvalidPartyType =
                 new JSONObject()
                         .put("query", userNoCompanies.name)
                         .put("partyType", invalidPartyType);  // ALL // USER // COMPANY // null
 
-        magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 457);
+        magicSearchPostRequestWithStatusCodeCheck(userWithInvalidPartyType, 457);
     }
     @DataProvider
     private Object[] invalidPartyTypes(){
@@ -162,19 +162,20 @@ public class MagicSearch {
                 "company",
                 "COMPANYY",
                 "COMPANY ",
-                "CCOMPANYY",
+                "CCOMPANY",
+                "COMPANIES",
                 "null"
         };
     }
 
     @Test(dataProvider = "invalidTaskStatuses")
     public void checkStatusCode458_invalidTaskStatus(String invalidTaskStatus) { // TODO: check also valid: ALL, ACTUAL, COMPLETE, FAIL
-        JSONObject userDoesNotExist =
+        JSONObject userWithInvalidTaskStatus =
                 new JSONObject()
                         .put("query", userNoCompanies.name)
                         .put("taskStatus", invalidTaskStatus);
 
-        magicSearchPostRequestWithStatusCodeCheck(userDoesNotExist, 458);
+        magicSearchPostRequestWithStatusCodeCheck(userWithInvalidTaskStatus, 458);
     }
     @DataProvider
     private Object[] invalidTaskStatuses(){
@@ -210,11 +211,54 @@ public class MagicSearch {
         };
     }
 
+    @Test(dataProvider = "invalidIncludes")
+    public void checkStatusCode459_invalidInclude(String invalidInclude) { // TODO: check also valid: ALL, USER, COMPANY, TASK, WHY
+        JSONObject userWithInvalidInclude =
+                new JSONObject()
+                        .put("query", userNoCompanies.name)
+                        .put("taskStatus", invalidInclude);
+
+        magicSearchPostRequestWithStatusCodeCheck(userWithInvalidInclude, 459);
+    }
+    @DataProvider
+    private Object[] invalidIncludes() {
+        return new String[]{
+                "all",
+                "ALOL",
+                "AL",
+                "AALL",
+                "ALLL",
+                "user",
+                "USLER",
+                "SER",
+                "USERa",
+                " USER",
+                "company",
+                "COMPANYY",
+                "COMPANY ",
+                "CCOMPANY",
+                "COMPANIES",
+                "task",
+                "TASK ",
+                " TASK",
+                "TASKS",
+                "tASK",
+                "why",
+                "WHY ",
+                " WHY",
+                "",
+                "null",
+
+                "JOB",
+                "JOBS",
+        };
+    }
+
 
     ////////////////////////////// SUPPORT FUNCTION
 
     private void magicSearchPostRequestWithStatusCodeCheck(JSONObject userDoesNotExist, int expectedStatusCode) {
-        System.out.println("\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
+        System.out.println("--------------------------\nTest\nRequest: \n" + userDoesNotExist.toString() + "\nResponse:");
 
         given()
                 .when()
