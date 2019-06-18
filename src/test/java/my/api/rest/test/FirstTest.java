@@ -88,5 +88,32 @@ public class FirstTest {
 
     }
 
+    @Test
+    public void test() {
+        String s = "123456789";
+        int i = 1934;
+        System.out.println(1 + (i - (i%100)) / 100);
+    }
 
+    /** no exception truncation [startindex; endindex)
+     * @param line
+     * @param startindex from 0 index (inclusive)
+     * @param endindex from 0 index (exclusive)
+     * @return
+     */
+    public String truncate(String line, int startindex, int endindex) {
+        if (line == null)
+            return null;
+        if (line.length() == 0)
+            return line;
+        if (startindex >= line.length()) {
+            return "";  // discussable: why not null
+        } else {
+            if (endindex > line.length()) {
+                return line.substring(startindex);
+            } else {
+                return line.substring(startindex, endindex);
+            }
+        }
+    }
 }
